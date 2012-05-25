@@ -428,8 +428,6 @@ class Template
 		return implode("\n\t", $resources);
 
 	}
-=======
->>>>>>> parent of 73e7655... Simple assets features added.
 
 	/**
 	 * Which theme are we using here?
