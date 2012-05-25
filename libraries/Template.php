@@ -46,8 +46,6 @@ class Template
 	private $_ci;
 
 	private $_data = array();
-	
-	private $_assets = array();
 
 	/**
 	 * Constructor - Sets Preferences
@@ -62,7 +60,7 @@ class Template
 		{
 			$this->initialize($config);
 		}
-				
+
 		log_message('debug', 'Template Class Initialized');
 	}
 
@@ -351,6 +349,7 @@ class Template
 		return $this;
 	}
 
+<<<<<<< HEAD
 	/**
 	 * Add css file(s) to assets
 	 *
@@ -429,6 +428,8 @@ class Template
 		return implode("\n\t", $resources);
 
 	}
+=======
+>>>>>>> parent of 73e7655... Simple assets features added.
 
 	/**
 	 * Which theme are we using here?
