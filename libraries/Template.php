@@ -46,6 +46,8 @@ class Template
 	private $_ci;
 
 	private $_data = array();
+	
+	private $_assets = array();
 
 	/**
 	 * Constructor - Sets Preferences
