@@ -349,7 +349,6 @@ class Template
 		return $this;
 	}
 
-<<<<<<< HEAD
 	/**
 	 * Add css file(s) to assets
 	 *
