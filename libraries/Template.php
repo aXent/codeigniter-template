@@ -46,6 +46,8 @@ class Template
 	private $_ci;
 
 	private $_data = array();
+	
+	private $_assets = array();
 
 	/**
 	 * Constructor - Sets Preferences
@@ -60,7 +62,7 @@ class Template
 		{
 			$this->initialize($config);
 		}
-
+				
 		log_message('debug', 'Template Class Initialized');
 	}
 
@@ -349,6 +351,79 @@ class Template
 		return $this;
 	}
 
+	/**
+	 * Add css file(s) to assets
+	 *
+	 * @access	public
+	 * @param   strubg
+	 * @return	void.
+	 */
+	public function css($files) 
+	{
+		if (is_array($files)) {
+			foreach($files as $file) {
+				$this->_assets['css'][] = $file;
+			}
+		}
+		else {
+			$this->_assets['css'][] = $file;
+		}
+	}
+	
+	/**
+	 * Add js file(s) to assets
+	 *
+	 * @access	public
+	 * @param   strubg
+	 * @return	void.
+	 */
+	public function js($files) 
+	{
+		if (is_array($files)) {
+			foreach($files as $file) {
+				$this->_assets['js'][] = $file;
+			}
+		}
+		else {
+			$this->_assets['js'][] = $file;
+		}
+	}
+	
+	/**
+	 * return assets in string.
+	 *
+	 * @access	public
+	 * @param   strubg
+	 * @return	void.
+	 */
+	
+	public function resources() 
+	{
+		$resources = array();
+		
+		foreach($this->_assets as $type => $files) {
+		{
+			if (!empty($this->_theme)) 
+			{
+				foreach ($this->_theme_locations as $location)
+				{
+					$potentialFiles = array(
+						 APPPATH . '/modules/' . $this->_module . '/'.$type.'/' . $view,
+						$this->_theme . '/'.$type.'/' . $file
+					);
+				}
+			}
+			echo 'Scanning: <br />';
+			print_r($potentialFiles);
+			foreach($potentialFiles as $filePath) {
+				if (file_exists($filePath)) {
+					$resources[] = () ? : '<link href="'.site_url('theme/'.$this->get_theme().'/css/'.$file).'" media="screen" rel="stylesheet" type="text/css" />';
+				}
+			}
+		}
+		
+		return $resources;
+	}
 
 	/**
 	 * Which theme are we using here?
