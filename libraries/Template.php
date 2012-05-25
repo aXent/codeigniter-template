@@ -362,11 +362,11 @@ class Template
 	{
 		if (is_array($files)) {
 			foreach($files as $file) {
-				$this->_assets['css'][] = $file;
+				$this->_assets['css'][] = $files;
 			}
 		}
 		else {
-			$this->_assets['css'][] = $file;
+			$this->_assets['css'][] = $files;
 		}
 	}
 	
@@ -381,11 +381,11 @@ class Template
 	{
 		if (is_array($files)) {
 			foreach($files as $file) {
-				$this->_assets['js'][] = $file;
+				$this->_assets['js'][] = $files;
 			}
 		}
 		else {
-			$this->_assets['js'][] = $file;
+			$this->_assets['js'][] = $files;
 		}
 	}
 	
@@ -401,28 +401,33 @@ class Template
 	{
 		$resources = array();
 		
-		foreach($this->_assets as $type => $files) {
+		foreach($this->_assets as $type => $files)
 		{
 			if (!empty($this->_theme)) 
 			{
 				foreach ($this->_theme_locations as $location)
 				{
 					$potentialFiles = array(
-						 APPPATH . '/modules/' . $this->_module . '/'.$type.'/' . $view,
-						$this->_theme . '/'.$type.'/' . $file
+						 APPPATH . '/modules/' . $this->_module . '/'.$type.'/',
+						$location.$this->_theme.'/'.$type.'/'
 					);
 				}
 			}
-			echo 'Scanning: <br />';
-			print_r($potentialFiles);
-			foreach($potentialFiles as $filePath) {
-				if (file_exists($filePath)) {
-					$resources[] = () ? : '<link href="'.site_url('theme/'.$this->get_theme().'/css/'.$file).'" media="screen" rel="stylesheet" type="text/css" />';
+			foreach($potentialFiles as $filePath) 
+			{
+				foreach($files as $file) 
+				{
+					if (file_exists($filePath.$file)) 
+					{
+						$resources[] = (pathinfo($filePath.$file, PATHINFO_EXTENSION) == 'js') ? '<script src="'.site_url('theme/'.$this->get_theme().'/js/'.$file).'"></script>' : '<link href="'.site_url('theme/'.$this->get_theme().'/css/'.$file).'" media="screen" rel="stylesheet" type="text/css" />';
+					}	
 				}
+
 			}
 		}
 		
-		return $resources;
+		return implode("\n\t", $resources);
+
 	}
 
 	/**
